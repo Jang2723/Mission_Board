@@ -52,3 +52,9 @@
     - 작성당시 비밀번호와 일치해야 실제로 삭제 
 
 ### 댓글 관련 기능
+
+### 오류
+- 1. 실행했을 때 오류가 발생함![실행오류1](실행오류1.PNG)
+   - articleController에서 클래스 위의 @RequiredMapping("article")이라고 작성한 뒤 다른 프로젝트 처럼 return "article/index";로 작성했는데 접속오류가 발생했다.
+   - return부분에 article 부분을 지우니 잘 실행된다.
+
