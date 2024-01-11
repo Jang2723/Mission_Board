@@ -1,7 +1,7 @@
 ### 오류
 1. 실행했을 때 오류가 발생함![실행오류1](실행오류1.PNG) -> 해결
-    - articleController에서 클래스 위의 @RequiredMapping("article")이라고 작성한 뒤 다른 프로젝트 처럼 return "article/index";로 작성했는데 접속오류가 발생했다.
-    - return부분에 article 부분을 지우니 잘 실행된다.
+    - articleController에서 클래스 위의 @RequiredMapping("article")이라고 작성한 뒤 다른 프로젝트 처럼 return "article/index";로 작성했는데 접속오류가 발생
+    - return부분에 article 부분을 지우니 잘 실행됨
 
 
 2. 비밀번호 확인 과정 -> 해결
@@ -14,7 +14,7 @@
 
 
 3. comment 수정 링크, 삭제링크 -> 해결
-    - comment 를 수정/삭제하기 위한 링크가 제대로 작동하지 않으므
+    - comment 를 수정/삭제하기 위한 링크가 제대로 작동하지 않음
         - Article 수정 페이지로 이동함
         - commentController에서 매핑할 때 경로가 일치하지 않아서 생기는 오류였음
 
@@ -41,6 +41,7 @@
 5. 링크 이동이 제대로 되지 않음 -> 해결
    - `<form th:action="@{board/{boardId}/article/{id}/delete(boardId=${boardId},id=${article.id})}" method="post" onsubmit="return validatePassword();">`
    - 위의 코드에서 @{/board라고 입력해야 하는데 '/'를 쓰지않아서 링크 이동이 제대로 되지 않았다.
+   - / 붙여서 실행하니 잘 작동함
 
 
 6. 어떤 게시판에 작성할지 선택 가능
