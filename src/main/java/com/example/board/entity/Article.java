@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /* 전체 클래스에는 Getter를 사용자가 할당할 수 있는 속성에는 Setter를 적용
@@ -23,23 +25,36 @@ public class Article {
     private String content;
 
     @Setter
-    private String password;
+    private String originPassword;
+    @OneToMany(mappedBy = "article")
+    private final List<Comment> comments = new ArrayList<>();
+
+    @ManyToOne
+    private Board board;
+
+    public Article(String title, String content, String originPassword, Board board) {
+        this.title = title;
+        this.content = content;
+        this.originPassword = originPassword;
+        this.board = board;
+    }
 
     public Article(){}
 
-    public Article(String title, String content, String password) {
+    public Article(String title, String content, String originPassword) {
         this.title = title;
         this.content = content;
-        this.password = password;
+        this.originPassword = originPassword;
     }
 
     @Override
     public String toString() {
         return "Article{" +
                 "id=" + id +
+                "boardId=" + board.getId() +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
-                ", password='" + password + '\'' +
+                ", originPassword='" + originPassword + '\'' +
                 '}';
     }
 
@@ -48,11 +63,11 @@ public class Article {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Article article = (Article) o;
-        return Objects.equals(id, article.id) && Objects.equals(title, article.title) && Objects.equals(content, article.content) && Objects.equals(password, article.password);
+        return Objects.equals(id, article.id) && Objects.equals(title, article.title) && Objects.equals(content, article.content) && Objects.equals(originPassword, article.originPassword);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, content, password);
+        return Objects.hash(id, title, content, originPassword);
     }
 }

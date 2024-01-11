@@ -1,17 +1,23 @@
 package com.example.board.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+import java.util.ArrayList;
+import java.util.List;
+
+@Getter
 @Entity
 public class Board {
-    // 게시판 객체
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
+
+    @Setter
+    private String boardName;
+
+    @OneToMany(mappedBy = "board")
+    private final List<Article> articles = new ArrayList<>();
 
 }

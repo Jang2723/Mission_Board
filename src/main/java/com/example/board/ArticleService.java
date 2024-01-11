@@ -2,7 +2,9 @@ package com.example.board;
 
 import com.example.board.dto.ArticleDto;
 import com.example.board.entity.Article;
+import com.example.board.entity.Board;
 import com.example.board.repo.ArticleRepository;
+import com.example.board.repo.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,11 +17,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ArticleService {
     private final ArticleRepository articleRepository;
+    private final BoardRepository boardRepository;
 
     // 게시글 만들기
-    public ArticleDto create(ArticleDto dto){
+    public ArticleDto create(Long boardId,ArticleDto dto){
+        Board board = boardRepository.findById(boardId).orElseThrow();
         Article article = new Article(
-                dto.getTitle(), dto.getContent(), dto.getPassword()
+                dto.getTitle(),
+                dto.getContent(),
+                dto.getOriginPassword(),
+                board
         );
         // fromEntity -> entity를 dto로 변환
         return ArticleDto.fromEntity(articleRepository.save(article));
@@ -45,6 +52,7 @@ public class ArticleService {
         Article article = articleRepository.findById(id).orElseThrow();
         article.setTitle(dto.getTitle());
         article.setContent(dto.getContent());
+        article.setOriginPassword(dto.getOriginPassword());
         return ArticleDto.fromEntity(articleRepository.save(article));
     }
 
@@ -52,5 +60,4 @@ public class ArticleService {
     public void delete(Long id){
         articleRepository.delete(articleRepository.findById(id).orElseThrow());
     }
-
 }

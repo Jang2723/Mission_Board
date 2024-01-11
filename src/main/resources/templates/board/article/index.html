@@ -6,9 +6,7 @@
 </head>
 <body>
 <h1>Article List</h1>
-<div>
-    <a href="/article/write">Write</a>
-</div>
+<a th:href="@{/board}">전체 게시판 보기</a>
 <!--없으면 No Article... 출력 -->
 <h2 th:if="${articles.isEmpty()}">
     No Article...
@@ -21,12 +19,13 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="article: ${articles}">
-        <th scope="col" th:text="${article.id}"></th>
-        <th scope="col">
-            <a th:href="@{/article/{id}(id=${article.id})}" th:text="${article.title}"></a>
-        </th>
-    </tr>
+        <tr th:each="index: ${#numbers.sequence(articles.size() - 1, 0, -1)}">
+            <th scope="col" th:text="${articles[index].id}"></th>
+            <th scope="col">
+<!--                <p th:text="${articles[index].title}"></p>-->
+                <a th:href="@{/board/{boardId}/article/{id}(boardId=${boardId},id=${articles[index].id})}" th:text="${articles[index].title}"></a>
+            </th>
+        </tr>
     </tbody>
 </table>
 </body>
