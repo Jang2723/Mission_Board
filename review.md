@@ -293,8 +293,8 @@ Comment를 하나씩 읽기 위한 메서드로 `findById()` 메서드는 결과
     }
 
 ```
-article과 마찬가지로 comment 하나를 업데이트 하기 위해선 업데이트 하고자 하는 comment의 id를 통해 읽어온 뒤 새로운 객체(comment)를 만들어 저장한다. 
-사용자가 입력한 값들을 get을 통해 가져온뒤 객체에 set을 통해 저장하고 repository의 `save()` 메서드를 통해 repository에 다시 저장한다.
+article과 마찬가지로 comment 하나를 업데이트 하기 위해선 업데이트 하고자 하는 comment의 id를 통해 읽어온 뒤 새로운 객체(comment)를 만들어 저장합니다. 
+사용자가 입력한 값들을 get을 통해 가져온뒤 객체에 set을 통해 저장하고 repository의 `save()` 메서드를 통해 repository에 다시 저장합니다.
 
 ```java
    public void delete(Long commentId, CommentDto dto) {
@@ -305,4 +305,4 @@ article과 마찬가지로 comment 하나를 업데이트 하기 위해선 업�
 
     }
 ```
-repository의 `delete()` 메서드를 통해 repository에서 해당 id를 가진 comment를 삭제한다.
+repository의 `delete()` 메서드를 통해 repository에서 해당 id를 가진 comment를 삭제합니다.
