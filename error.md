@@ -2,6 +2,8 @@
 1. 실행했을 때 오류가 발생함![실행오류1](실행오류1.PNG) -> 해결
     - articleController에서 클래스 위의 @RequiredMapping("article")이라고 작성한 뒤 다른 프로젝트 처럼 return "article/index";로 작성했는데 접속오류가 발생
     - return부분에 article 부분을 지우니 잘 실행됨
+    - -> board 만들기 전의 오류 상황, board를 만들고 난 이후 @RequiredMapping이 `@RequestMapping("board/{boardId}/article")`으로 바뀌어서 return 값도
+      `return String.format("board/%d/article/index", boardId);`으로 수정하니 잘 실행됨
 
 
 2. 비밀번호 확인 과정 -> 해결
