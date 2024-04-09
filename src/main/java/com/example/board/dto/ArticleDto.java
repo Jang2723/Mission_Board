@@ -12,19 +12,16 @@ import java.util.List;
 @NoArgsConstructor
 public class ArticleDto {
     private Long id;
-    @Setter
     private String title;
-    @Setter
     private String content;
-    @Setter
-    private String originPassword;
+    private String password;
+    private String boardName;
+    private final List<CommentDto> comments = new ArrayList<>();
 
-    private List<CommentDto> comments = new ArrayList<>();
-
-    public ArticleDto(String title, String content, String originPassword) {
+    public ArticleDto(String title, String content, String password) {
         this.title = title;
         this.content = content;
-        this.originPassword = originPassword;
+        this.password = password;
     }
 
 
@@ -33,11 +30,9 @@ public class ArticleDto {
         dto.id = entity.getId();
         dto.title = entity.getTitle();
         dto.content = entity.getContent().replace("\n", "<br>");
-        dto.originPassword = entity.getOriginPassword();
-        dto.comments = new ArrayList<>();
+        dto.boardName = entity.getBoard().getName();
         for (Comment comment: entity.getComments())
             dto.comments.add(CommentDto.fromEntity(comment));
         return dto;
     }
-
 }

@@ -2,10 +2,14 @@ package com.example.board.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Objects;
 
 @Getter
 @Entity
+@NoArgsConstructor
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,33 +18,24 @@ public class Comment {
     @Setter
     private String content;
     @Setter
-    private String originPassword;
+    private String password;
 
     @Setter
     @ManyToOne
     private Article article;
 
-    @ManyToOne
-    private Board board;
 
-    public Comment() {
-    }
-
-    public Comment(String content, String originPassword, Article article, Board board) {
-        this.content = content;
-        this.originPassword = originPassword;
-        this.article = article;
-        this.board = board;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Comment comment = (Comment) o;
+        return Objects.equals(id, comment.id) && Objects.equals(content, comment.content) && Objects.equals(password, comment.password);
     }
 
     @Override
-    public String toString() {
-        return "Comment{" +
-                "id=" + id +
-                ", articleId=" + article.getId() +
-                ", boardId=" + board.getId() +
-                ", content='" + content + '\'' +
-                ", originPassword='" + originPassword + '\'' +
-                '}';
+    public int hashCode() {
+        return Objects.hash(id, content, password);
     }
+
 }

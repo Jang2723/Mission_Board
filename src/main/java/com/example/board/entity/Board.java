@@ -15,7 +15,7 @@ public class Board {
     Long id;
 
     @Setter
-    private String boardName;
+    private String name;
 
     @OneToMany(mappedBy = "board")
     private final List<Article> articles = new ArrayList<>();

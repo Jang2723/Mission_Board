@@ -11,22 +11,20 @@ import java.util.List;
 @NoArgsConstructor
 public class BoardDto {
     private Long id;
-
     @Setter
-    private String boardName;
+    private String name;
 
-    private List<ArticleDto> articles = new ArrayList<>();
+    private final List<ArticleDto> articles = new ArrayList<>();
 
     public BoardDto(Long id, String boardName) {
         this.id = id;
-        this.boardName = boardName;
+        this.name = name;
     }
 
     public static BoardDto fromEntity(Board entity){
         BoardDto dto = new BoardDto();
         dto.id = entity.getId();
-        dto.boardName = entity.getBoardName();
-        dto.articles = new ArrayList<>();
+        dto.name = entity.getName();
         for (Article article: entity.getArticles())
             dto.articles.add(ArticleDto.fromEntity(article));
         return dto;

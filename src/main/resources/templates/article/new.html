@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>새 게시글 작성하기</title>
+</head>
+<body>
+<div>
+    <h1>게시글 작성</h1>
+    <a href="/board">뒤로가기</a>
+</div>
+<hr>
+<form action="/article" method="post">
+    <div>
+        <label for="title-input">Title</label>
+        <input type="text" name="title" id="title-input">
+    </div>
+    <div>
+        <label for="content-area">Content</label>
+        <textarea cols="30" rows="3" name="content" id="content-area"></textarea>
+    </div>
+    <div>
+        <label for="password-input">Password</label>
+        <input type="password" name="password" id="password-input">
+    </div>
+    <div>
+        <label for="board-select">게시판</label>
+        <select name="board-id" id="board-select">
+            <option disabled selected>게시판 고르기</option>
+            <option th:each="board: ${boards}" th:value="${board.id}" th:text="${board.name}"></option>
+        </select>
+    </div>
+    <input type="submit" value="Write">
+</form>
+</body>
+</html>

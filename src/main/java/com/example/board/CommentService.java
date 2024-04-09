@@ -18,36 +18,23 @@ public class CommentService {
     private final BoardRepository boardRepository;
 
 
-    public CommentDto create(Long boardId, Long articleId, CommentDto dto) {
-        Board board = boardRepository.findById(boardId).orElseThrow();
+    public CommentDto createComment(Long articleId, CommentDto dto) {
         Article article = articleRepository.findById(articleId)
                 .orElseThrow();
-        Comment comment = new Comment(
-                dto.getContent(),
-                dto.getOriginPassword(),
-                article,
-                board
-        );
+
+        Comment comment = new Comment();
+        comment.setArticle(article);
+        comment.setContent(dto.getContent());
+        comment.setPassword(dto.getPassword());
         return CommentDto.fromEntity(commentRepository.save(comment));
     }
 
-    public CommentDto read(Long commentId) {
-        return CommentDto.fromEntity(commentRepository.findById(commentId)
-                .orElseThrow());
-    }
 
-    public CommentDto update(Long commentId, CommentDto dto) {
-        Comment comment = commentRepository.findById(commentId).orElseThrow();
-        comment.setContent(dto.getContent());
-        comment.setOriginPassword(dto.getOriginPassword());
-        return CommentDto.fromEntity(commentRepository.save(comment));
-    }
-
-    public void delete(Long commentId, CommentDto dto) {
-        Comment comment = commentRepository.findById(commentId).orElseThrow();
-        comment.setContent(dto.getContent());
-        comment.setOriginPassword(dto.getOriginPassword());
+    public void deleteComment(Long id, String password) {
+        Comment comment = commentRepository.findById(id).orElseThrow();
+        if (comment.getPassword().equals(password)) {
+            commentRepository.delete(comment);
+        }
         commentRepository.delete(comment);
-
     }
 }

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:if="${selected == null}">게시판: 전체 게시판</title>
+    <title th:unless="${selected == null}">게시판: [[${selected.name}]]</title>
+</head>
+<body>
+<div>
+<!-- 각 게시판 링크   -->
+    <a href="/board">전체 게시판</a>
+    <a th:each="board: ${boards}" th:href="@{/board/{boardId}(boardId=${board.id})}">[[${board.name}]] </a>
+</div>
+<div>
+    <h1 th:if="${selected == null}">전체 게시판</h1>
+    <h1 th:unless="${selected == null}" th:text="${selected.name}"></h1>
+    <a href="/article/new">Write</a>
+</div>
+<hr>
+<h2 th:if="${articles.isEmpty()}">
+    No Articles
+</h2>
+<table th:unless="${articles.isEmpty()}">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+        <th th:if="${selected == null}" scope="col">Board</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="article: ${articles}">
+        <th scope="col" th:text="${article.id}"></th>
+        <th scope="col">
+            <a th:href="@{/article/{id}(id=${article.id})}" th:text="${article.title}"></a>
+        </th>
+        <th th:if="${selected == null}" scope="col" th:text="${article.boardName}"></th>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

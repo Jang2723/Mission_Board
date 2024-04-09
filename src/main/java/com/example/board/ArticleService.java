@@ -19,45 +19,47 @@ public class ArticleService {
     private final ArticleRepository articleRepository;
     private final BoardRepository boardRepository;
 
-    // 게시글 만들기
-    public ArticleDto create(Long boardId,ArticleDto dto){
-        Board board = boardRepository.findById(boardId).orElseThrow();
-        Article article = new Article(
-                dto.getTitle(),
-                dto.getContent(),
-                dto.getOriginPassword(),
-                board
-        );
-        // fromEntity -> entity를 dto로 변환
-        return ArticleDto.fromEntity(articleRepository.save(article));
-    }
-
-    // 게시글 모두 읽기
-    public List<ArticleDto> readAll(){
-        List<ArticleDto> articleList = new ArrayList<>();
-        for (Article article : articleRepository.findAll()){
-            articleList.add(ArticleDto.fromEntity(article));
-        }
-        return articleList;
-    }
-
-    // 게시글 하나 읽기
-    public ArticleDto readOne(Long id){
-        Article article = articleRepository.findById(id).orElseThrow();
-        return ArticleDto.fromEntity(article);
-    }
-
-    // 게시글 수정
-    public ArticleDto update(Long id, ArticleDto dto){
-        Article article = articleRepository.findById(id).orElseThrow();
+    public ArticleDto create(Long boardId, ArticleDto dto) {
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow();
+        Article article = new Article();
+        article.setBoard(board);
         article.setTitle(dto.getTitle());
         article.setContent(dto.getContent());
-        article.setOriginPassword(dto.getOriginPassword());
+        article.setPassword(dto.getPassword());
         return ArticleDto.fromEntity(articleRepository.save(article));
     }
 
-    // 게시글 삭제
-    public void delete(Long id){
-        articleRepository.delete(articleRepository.findById(id).orElseThrow());
+    public List<ArticleDto> readALL() {
+        List<ArticleDto> articleDtos = new ArrayList<>();
+        for (Article article: articleRepository.findAll()){
+            articleDtos.add(ArticleDto.fromEntity(article));
+        }
+        return articleDtos;
+    }
+
+    public ArticleDto readArticle(Long id){
+        return ArticleDto.fromEntity(articleRepository.findById(id)
+                .orElseThrow());
+    }
+
+    public ArticleDto update(Long id, ArticleDto articleDto) {
+        Article article = articleRepository.findById(id)
+                .orElseThrow();
+        if (article.getPassword().equals(articleDto.getPassword())) {
+            article.setTitle(articleDto.getTitle());
+            article.setContent(articleDto.getContent());
+        }
+        // TODO else에서 throw
+        return ArticleDto.fromEntity(articleRepository.save(article));
+    }
+
+    public void delete(Long id, String password) {
+        Article article = articleRepository.findById(id)
+                .orElseThrow();
+        if (article.getPassword().equals(password)) {
+            articleRepository.delete(article);
+        }
+        // TODO else에서 throw
     }
 }
